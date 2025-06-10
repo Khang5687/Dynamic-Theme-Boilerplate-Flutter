@@ -1,0 +1,36 @@
+name: theme_foundation
+description: A comprehensive theme foundation based on the budget app's theming system
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # Core dependencies for the theme system
+  shared_preferences: ^2.2.2
+  auto_size_text: ^3.0.0
+  
+  # Optional: Add these for enhanced functionality
+  # easy_localization: ^3.0.3  # For localization support
+  # system_theme: ^2.3.1       # For Material You system colors
+  # dynamic_color: ^1.6.8      # For Material You dynamic colors
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flut   ter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  
+  # Optional: Add custom fonts
+  # fonts:
+  #   - family: CustomFont
+  #     fonts:
+  #       - asset: fonts/CustomFont-Regular.ttf
+  #       - asset: fonts/CustomFont-Bold.ttf
+  #         weight: 700 
