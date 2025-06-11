@@ -1,8 +1,11 @@
+![Demo](https://github.com/promotional/github/demo.gif)
+
 # 🎨 Theme Foundation
 
 A comprehensive, production-ready theming system for Flutter applications, extracted and enhanced from a sophisticated budget app. This foundation provides Material You support, iOS design integration, advanced color management, intelligent font handling, and comprehensive accessibility features.
 
 ## ✨ Features Overview
+
 
 ### 🌈 **Advanced Color System**
 - **Named Colors**: Use semantic color names like `"text"`, `"primary"`, `"success"`, `"error"`
