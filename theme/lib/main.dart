@@ -259,17 +259,34 @@ class HomePage extends StatelessWidget {
             
             const SizedBox(height: 12),
             
-            ElevatedButton(
-              onPressed: () async {
-                // Toggle contrast setting
-                bool currentContrast = AppSettings.getWithDefault<bool>('increaseTextContrast', false);
-                await AppSettings.set('increaseTextContrast', !currentContrast);
-              },
-              child: const AppText(
-                'Toggle Text Contrast',
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      // Toggle contrast setting
+                      bool currentContrast = AppSettings.getWithDefault<bool>('increaseTextContrast', false);
+                      await AppSettings.set('increaseTextContrast', !currentContrast);
+                    },
+                    child: const AppText(
+                      'Toggle Contrast',
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => _cycleFonts(),
+                    child: const AppText(
+                      'Change Font',
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -286,6 +303,17 @@ class HomePage extends StatelessWidget {
     int nextIndex = (currentIndex + 1) % colors.length;
     
     await AppTheme.setAccentColor(colors[nextIndex]);
+  }
+
+  void _cycleFonts() async {
+    final availableFonts = ['Avenir', 'Inter', 'DMSans', 'system'];
+    final currentFont = AppSettings.getWithDefault<String>('font', 'Avenir');
+    
+    // Find next font in the list
+    int currentIndex = availableFonts.indexOf(currentFont);
+    int nextIndex = (currentIndex + 1) % availableFonts.length;
+    
+    await AppSettings.set('font', availableFonts[nextIndex]);
   }
 }
 

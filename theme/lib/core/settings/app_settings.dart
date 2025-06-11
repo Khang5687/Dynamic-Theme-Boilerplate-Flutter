@@ -101,7 +101,7 @@ class AppSettings {
       'accentColor': '0xFF2196F3', // Default blue
       
       // Text settings
-      'font': 'system', // 'system' or custom font family name
+      'font': 'Avenir', // 'system', 'Avenir', 'Inter', 'DMSans', etc.
       'fontSize': 16.0,
       'increaseTextContrast': false,
       

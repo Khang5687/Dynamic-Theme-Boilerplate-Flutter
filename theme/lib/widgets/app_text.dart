@@ -73,10 +73,10 @@ class AppText extends StatelessWidget {
     String locale = AppSettings.getWithDefault<String>('locale', 'system');
     String fontFamily = AppSettings.getWithDefault<String>('font', 'system');
     
-    // Handle font fallbacks for Asian locales
+    // Handle font fallbacks for Asian locales (same as budget app)
     String finalFontFamily = fontFamily;
-    if (fallbackFontLocales.contains(locale) && fontFamily == 'system') {
-      finalFontFamily = 'Noto Sans'; // Better for Asian characters
+    if (fallbackFontLocales.contains(locale) && fontFamily == 'Avenir') {
+      finalFontFamily = 'DMSans'; // Better for Asian characters
     }
 
     final TextStyle textStyle = TextStyle(
@@ -84,6 +84,7 @@ class AppText extends StatelessWidget {
       fontWeight: fontWeight,
       fontSize: fontSize,
       fontFamily: finalFontFamily == 'system' ? null : finalFontFamily,
+      fontFamilyFallback: ['Inter'], // Same fallback as budget app
       color: finalTextColor,
       height: height,
       shadows: shadow == true
