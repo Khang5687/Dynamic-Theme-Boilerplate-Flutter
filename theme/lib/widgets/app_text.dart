@@ -71,20 +71,18 @@ class AppText extends StatelessWidget {
 
     // Get current locale and font settings
     String locale = AppSettings.getWithDefault<String>('locale', 'system');
-    String fontFamily = AppSettings.getWithDefault<String>('font', 'system');
+    String fontFamily = AppSettings.getWithDefault<String>('font', 'Avenir');
     
-    // Handle font fallbacks for Asian locales (same as budget app)
-    String finalFontFamily = fontFamily;
-    if (fallbackFontLocales.contains(locale) && fontFamily == 'Avenir') {
-      finalFontFamily = 'DMSans'; // Better for Asian characters
-    }
+    // Smart font fallback system (like budget app)
+    String finalFontFamily = _getFinalFontFamily(fontFamily, locale);
+    List<String> fontFallbacks = _getFontFallbacks(fontFamily, locale);
 
     final TextStyle textStyle = TextStyle(
       letterSpacing: letterSpacing,
       fontWeight: fontWeight,
       fontSize: fontSize,
       fontFamily: finalFontFamily == 'system' ? null : finalFontFamily,
-      fontFamilyFallback: ['Inter'], // Same fallback as budget app
+      fontFamilyFallback: fontFallbacks,
       color: finalTextColor,
       height: height,
       shadows: shadow == true
@@ -228,6 +226,55 @@ TextStyle _getSpanTextStyle(
     fontSize: fontSize,
     fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
   );
+}
+
+/// Smart font fallback system (like budget app)
+String _getFinalFontFamily(String fontFamily, String locale) {
+  // Handle Asian locales - switch to fonts with better character support
+  if (fallbackFontLocales.contains(locale)) {
+    switch (fontFamily) {
+      case 'Avenir':
+        return 'DMSans'; // DMSans has better Asian character support
+      case 'YourFont': // Replace with your custom font name
+        return 'Inter'; // Fallback to Inter for Asian locales
+      default:
+        return fontFamily;
+    }
+  }
+  return fontFamily;
+}
+
+List<String> _getFontFallbacks(String fontFamily, String locale) {
+  // Create comprehensive fallback chain
+  List<String> fallbacks = [];
+  
+  // Add locale-specific fallbacks first
+  if (fallbackFontLocales.contains(locale)) {
+    fallbacks.addAll(['DMSans', 'Inter']);
+  } else {
+    fallbacks.add('Inter');
+  }
+  
+  // Add font-specific fallbacks
+  switch (fontFamily) {
+    case 'Avenir':
+      fallbacks.addAll(['Inter', 'DMSans']);
+      break;
+    case 'YourFont': // Replace with your custom font
+      fallbacks.addAll(['Inter', 'Avenir', 'DMSans']);
+      break;
+    case 'DMSans':
+      fallbacks.addAll(['Inter', 'Avenir']);
+      break;
+    case 'Inter':
+      fallbacks.addAll(['DMSans', 'Avenir']);
+      break;
+    default:
+      fallbacks.addAll(['Inter', 'DMSans']);
+  }
+  
+  // Remove duplicates while preserving order
+  return fallbacks.toSet().toList();
 }
 
 /// Convenience constructors for common text styles

@@ -3,6 +3,7 @@ import 'core/settings/app_settings.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/app_colors.dart';
 import 'widgets/app_text.dart';
+import 'pages/settings_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -181,11 +182,14 @@ class HomePage extends StatelessWidget {
       
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Cycle through accent colors
-          _changeAccentColor();
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const SettingsPage(),
+            ),
+          );
         },
-        child: const Icon(Icons.palette),
-        tooltip: 'Change Accent Color',
+        child: const Icon(Icons.settings),
+        tooltip: 'Open Settings',
       ),
     );
   }
