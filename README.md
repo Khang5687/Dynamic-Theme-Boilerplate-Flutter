@@ -1,4 +1,6 @@
-![Demo](https://github.com/Khang5687/Flutter-Theme-Foundation/blob/main/promotional/github/demo.gif)
+<div align="center">
+  <img src="https://github.com/Khang5687/Flutter-Theme-Foundation/blob/main/promotional/github/demo.gif" width="50%">
+</div>
 
 # 🎨 Theme Foundation
 
