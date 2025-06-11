@@ -1,4 +1,4 @@
-![Demo](https://github.com/promotional/github/demo.gif)
+![Demo](https://github.com/Khang5687/Flutter-Theme-Foundation/blob/main/promotional/github/demo.gif)
 
 # 🎨 Theme Foundation
 
