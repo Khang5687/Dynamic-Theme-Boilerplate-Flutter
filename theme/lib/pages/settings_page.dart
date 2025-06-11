@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart' as flutter_colorpicker;
 import '../core/settings/app_settings.dart';
 import '../core/theme/app_theme.dart';
 import '../core/theme/app_colors.dart';
+import '../core/theme/material_you.dart';
 import '../widgets/app_text.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -34,6 +35,7 @@ class _SettingsPageState extends State<SettingsPage> {
           _buildSectionHeader('Colors'),
           _buildAccentColorSelector(),
           _buildCustomColorPicker(),
+          _buildMaterialYouSettings(),
           _buildDivider(),
           
           // Text Section
@@ -276,7 +278,7 @@ class _SettingsPageState extends State<SettingsPage> {
             fontWeight: FontWeight.bold,
           ),
           content: SingleChildScrollView(
-            child: ColorPicker(
+            child: flutter_colorpicker.ColorPicker(
               pickerColor: pickerColor,
               onColorChanged: (color) {
                 pickerColor = color;
@@ -285,7 +287,7 @@ class _SettingsPageState extends State<SettingsPage> {
               enableAlpha: false,
               displayThumbColor: true,
               showLabel: true,
-              paletteType: PaletteType.hsvWithHue,
+              paletteType: flutter_colorpicker.PaletteType.hsvWithHue,
             ),
           ),
           actions: <Widget>[
@@ -419,6 +421,111 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  Widget _buildMaterialYouSettings() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const AppText(
+            'Material You & Platform Colors',
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+          const SizedBox(height: 8),
+          
+          // Material You toggle
+          SwitchListTile(
+            title: const AppText('Material You'),
+            subtitle: AppText(
+              MaterialYouManager.getStatusMessage(),
+              fontSize: 12,
+              colorName: 'textLight',
+            ),
+            value: AppSettings.getWithDefault<bool>('materialYou', false),
+            onChanged: MaterialYouManager.isSupported()
+                ? (value) async {
+                    await AppSettings.set('materialYou', value);
+                    setState(() {});
+                  }
+                : null,
+            contentPadding: EdgeInsets.zero,
+          ),
+          
+          // System accent toggle
+          SwitchListTile(
+            title: const AppText('Use System Accent'),
+            subtitle: AppText(
+              MaterialYouManager.supportsPlatformColors()
+                  ? 'Use system accent color when available'
+                  : 'Platform doesn\'t support system colors',
+              fontSize: 12,
+              colorName: 'textLight',
+            ),
+            value: AppSettings.getWithDefault<bool>('useSystemAccent', false),
+            onChanged: MaterialYouManager.supportsPlatformColors()
+                ? (value) async {
+                    await AppSettings.set('useSystemAccent', value);
+                    setState(() {});
+                  }
+                : null,
+            contentPadding: EdgeInsets.zero,
+          ),
+          
+          // Platform info
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: getColor(context, 'surfaceContainer').withOpacity(0.5),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      MaterialYouManager.hasDynamicColors() 
+                          ? Icons.palette
+                          : MaterialYouManager.isSupported()
+                              ? Icons.phone_android 
+                              : Icons.info_outline,
+                      size: 16,
+                      color: getColor(context, 'primary'),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: AppText(
+                        'Platform: ${MaterialYouManager.getPlatformName()}',
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        colorName: 'text',
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                AppText(
+                  'Status: ${MaterialYouManager.getStatusMessage()}',
+                  fontSize: 11,
+                  colorName: 'textLight',
+                ),
+                if (MaterialYouManager.hasDynamicColors()) ...[
+                  const SizedBox(height: 4),
+                  AppText(
+                    '✓ Dynamic colors available',
+                    fontSize: 11,
+                    colorName: 'success',
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildAboutTile() {
     return ListTile(
       title: const AppText(
@@ -427,7 +534,7 @@ class _SettingsPageState extends State<SettingsPage> {
         fontWeight: FontWeight.bold,
       ),
       subtitle: const AppText(
-        'A comprehensive theming system based on the budget app',
+        'A comprehensive theming system with Material You & iOS support',
         fontSize: 12,
         colorName: 'textLight',
       ),
@@ -436,13 +543,13 @@ class _SettingsPageState extends State<SettingsPage> {
         showAboutDialog(
           context: context,
           applicationName: 'Theme Foundation',
-          applicationVersion: '1.0.0',
-          applicationLegalese: '© 2023',
+          applicationVersion: '0.0.1',
+          applicationLegalese: 'This application is licensed under the GNU General Public License v3.0. For more details, visit https://www.gnu.org/licenses/gpl-3.0.html',
           children: [
             const Padding(
               padding: EdgeInsets.only(top: 16),
               child: AppText(
-                'A comprehensive theming system with support for light/dark modes, custom colors, fonts, and accessibility features.',
+                'Wassup',
                 fontSize: 14,
               ),
             ),

@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'app_colors.dart';
 import '../settings/app_settings.dart';
+import 'material_you.dart';
 
 /// Main theme configuration class
 class AppTheme {
   /// Create light theme
   static ThemeData lightTheme({Color? accentColor}) {
-    final accent = accentColor ?? AppSettings.accentColor;
+    final accent = accentColor ?? MaterialYouManager.getAccentColor();
     
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: accent,
+    final colorScheme = MaterialYouManager.createColorScheme(
       brightness: Brightness.light,
+      fallbackSeedColor: accent,
     );
 
     final themeData = ThemeData(
@@ -89,11 +90,11 @@ class AppTheme {
 
   /// Create dark theme
   static ThemeData darkTheme({Color? accentColor}) {
-    final accent = accentColor ?? AppSettings.accentColor;
+    final accent = accentColor ?? MaterialYouManager.getAccentColor();
     
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: accent,
+    final colorScheme = MaterialYouManager.createColorScheme(
       brightness: Brightness.dark,
+      fallbackSeedColor: accent,
     );
 
     final themeData = ThemeData(

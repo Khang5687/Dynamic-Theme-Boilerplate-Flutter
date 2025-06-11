@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'core/settings/app_settings.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/app_colors.dart';
+import 'core/theme/material_you.dart';
+import 'core/theme/ios_theme.dart';
 import 'widgets/app_text.dart';
 import 'pages/settings_page.dart';
 
@@ -10,6 +13,9 @@ void main() async {
   
   // Initialize the settings system
   await AppSettings.initialize();
+  
+  // Initialize Material You system
+  await MaterialYouManager.initialize();
   
   runApp(MyApp());
 }

@@ -96,9 +96,9 @@ class AppSettings {
     return {
       // Theme settings
       'themeMode': 'system', // 'light', 'dark', 'system'
-      'materialYou': false,
-      'useSystemAccent': false,
-      'accentColor': '0xFF2196F3', // Default blue
+      'materialYou': false,   // User can enable if supported
+      'useSystemAccent': false, // User can enable if supported
+      'accentColor': '0xFF2196F3', // Default blue fallback
       
       // Text settings
       'font': 'Avenir', // 'system', 'Avenir', 'Inter', 'DMSans', etc.
